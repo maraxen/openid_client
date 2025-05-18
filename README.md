@@ -108,7 +108,7 @@ authenticate(Uri uri, String clientId, List<String> scopes) async {
     // create an authenticator
     var authenticator = new Authenticator(client,
         scopes: scopes,
-        port: 4000, urlLancher: urlLauncher);
+        port: 4000, urlLauncher: urlLauncher);
     
     // starts the authentication
     var c = await authenticator.authorize();

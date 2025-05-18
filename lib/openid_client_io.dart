@@ -22,7 +22,7 @@ class Authenticator {
   /// The [Flow] used for authentication.
   final Flow flow;
 
-  final Function(String url) urlLancher;
+  final Function(String url) urlLauncher;
 
   /// The port used by the local http server.
   final int port;
@@ -40,7 +40,7 @@ class Authenticator {
   /// Creates an authenticator that uses the given [flow].
   Authenticator.fromFlow(
     this.flow, {
-    Function(String url)? urlLancher,
+    Function(String url)? urlLauncher,
     String? redirectMessage,
     this.htmlPage,
   })  : assert(
@@ -49,14 +49,14 @@ class Authenticator {
         ),
         redirectMessage = redirectMessage ?? 'You can now close this window',
         port = flow.redirectUri.port,
-        urlLancher = urlLancher ?? _runBrowser;
+        urlLauncher = urlLauncher ?? _runBrowser;
 
   /// Creates an authenticator that uses a [Flow.authorizationCodeWithPKCE] flow
   /// when [redirectUri] is null and a [Flow.authorizationCode] flow otherwise.
   Authenticator(
     Client client, {
     this.port = 3000,
-    this.urlLancher = _runBrowser,
+    this.urlLauncher = _runBrowser,
     Iterable<String> scopes = const [],
     Uri? redirectUri,
     String? redirectMessage,
@@ -88,7 +88,7 @@ class Authenticator {
 
     _requestsByState[state] = Completer();
     await _startServer(port, htmlPage, redirectMessage);
-    urlLancher(flow.authenticationUri.toString());
+    urlLauncher(flow.authenticationUri.toString());
 
     var response = await _requestsByState[state]!.future;
 
@@ -179,6 +179,6 @@ void _runBrowser(String url) {
 
 extension FlowX on Flow {
   Future<Credential> authorize({Function(String url)? urlLauncher}) {
-    return Authenticator.fromFlow(this, urlLancher: urlLauncher).authorize();
+    return Authenticator.fromFlow(this, urlLauncher: urlLauncher).authorize();
   }
 }

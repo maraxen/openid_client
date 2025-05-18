@@ -18,7 +18,7 @@ Future<Credential> authenticate(Client client,
 
   // create an authenticator
   var authenticator = io.Authenticator(client,
-      scopes: scopes, port: 4000, urlLancher: urlLauncher);
+      scopes: scopes, port: 4000, urlLauncher: urlLauncher);
 
   // starts the authentication
   var c = await authenticator.authorize();
